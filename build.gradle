@@ -7,13 +7,11 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	// Репозиторий для скачивания Baritone
 	maven { url 'https://jitpack.io' }
 }
 
 loom {
 	splitEnvironmentSourceSets()
-
 	mods {
 		"warden-bot" {
 			sourceSet sourceSets.main
@@ -26,17 +24,12 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	// Fabric API
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
-	// Подключение Baritone (необходимо для твоего кода)
 	modImplementation "com.github.cabaletta:baritone:v1.10.1"
 }
 
 processResources {
 	inputs.property "version", project.version
-
 	filesMatching("fabric.mod.json") {
 		expand "version": project.version
 	}
@@ -55,15 +48,5 @@ java {
 jar {
 	from("LICENSE") {
 		rename { "${it}_${project.name}"}
-	}
-}
-
-publishing {
-	publications {
-		create("mavenJava", MavenPublication) {
-			from components.java
-		}
-	}
-	repositories {
 	}
 }
